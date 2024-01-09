@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -23,6 +24,15 @@ const ContactForm = () => {
 
     if (!name || !number) {
       alert('Please enter both name and number.');
+      return;
+    }
+
+    const isContactExists = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isContactExists) {
+      alert(`${name} is already in contacts.`);
       return;
     }
 
