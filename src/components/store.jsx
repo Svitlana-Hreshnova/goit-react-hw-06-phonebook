@@ -4,8 +4,9 @@ import storage from 'redux-persist/lib/storage';
 import contactsReducer from './contactsSlice';
 
 const persistConfig = {
-  key: 'root',
+  key: 'Contacts',
   storage,
+  whitelist: ['contacts'],
 };
 
 const persistedReducer = persistReducer(persistConfig, contactsReducer);

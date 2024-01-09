@@ -1,7 +1,11 @@
-import css from './ContactForm.module.css';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../contactsSlice';
+import css from './ContactForm.module.css';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -22,7 +26,13 @@ const ContactForm = ({ onSubmit }) => {
       return;
     }
 
-    onSubmit({ name, number });
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
